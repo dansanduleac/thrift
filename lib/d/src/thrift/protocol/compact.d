@@ -453,6 +453,9 @@ private:
     final switch (type) {
       case TType.STOP:
         return CType.STOP;
+      case TType.VOID:
+        throw new TProtocolException(TProtocolException.Type.INVALID_DATA,
+          "Cannot convert TType.VOID to CType.");
       case TType.BOOL:
         return CType.BOOLEAN_TRUE;
       case TType.BYTE:

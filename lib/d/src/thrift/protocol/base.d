@@ -322,6 +322,10 @@ void skip(Protocol)(Protocol prot, TType type) if (is(Protocol : TProtocol)) {
       }
       prot.readSetEnd();
       break;
+
+    case TType.STOP:
+    case TType.VOID:
+      break;
   }
 }
 

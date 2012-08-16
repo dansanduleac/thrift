@@ -847,6 +847,10 @@ private {
         return "lst";
       case TType.SET:
         return "set";
+      case TType.STOP:
+      case TType.VOID:
+        throw new TProtocolException("Internal type",
+          TProtocolException.Type.NOT_IMPLEMENTED);
     }
   }
 
