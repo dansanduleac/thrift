@@ -141,5 +141,7 @@ unittest {
 
   void delegate() dg;
   auto b = hashSet(dg);
-  enforce(b.toString() == "thrift.util.hashset.HashSet!(void delegate()).HashSet");
+
+  // This doesn't work anymore in DMD 2.60, delegates have a .toString too.
+  //enforce(b.toString() == "thrift.util.hashset.HashSet!(void delegate()).HashSet");
 }
