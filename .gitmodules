@@ -1,0 +1,3 @@
+[submodule "lib/d/libevent"]
+	path = lib/d/libevent
+	url = git://github.com/D-Programming-Deimos/libevent.git
