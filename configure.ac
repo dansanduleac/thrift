@@ -21,6 +21,9 @@ AC_PREREQ(2.65)
 
 AC_INIT([thrift], [0.9.0-dev])
 
+config_flags="$*"
+AC_DEFINE_UNQUOTED([CONFIG_FLAGS],["$config_flags"],[Flags passed to configure])
+
 AC_CONFIG_AUX_DIR([.])
 
 AM_INIT_AUTOMAKE([1.9 tar-ustar])
