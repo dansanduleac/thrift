@@ -334,24 +334,28 @@ if test "$have_d" = "yes"; then
   have_deimos_event2=$success
 
   with_d_event_tests="no"
-  if test "$have_deimos_event2" = "yes"; then
-    if test "x$DMD_LIBEVENT_FLAGS" = "x"; then
-      if test "$dmd_optlink" = "yes"; then
-        AC_MSG_WARN([D libevent interface found, but cannot auto-detect \
+  if test "$have_deimos_event2" = "no"; then
+    AC_MSG_WARN([Using internal deimos.event2.event at ${srcdir}/lib/d])
+    DMD_EXTRA_FLAGS="-I${srcdir}/lib/d/libevent"
+  fi
+  if test "x$DMD_LIBEVENT_FLAGS" = "x"; then
+    if test "$dmd_optlink" = "yes"; then
+      AC_MSG_WARN([D libevent interface found, but cannot auto-detect \
 linker flags for OPTLINK. Please set DMD_LIBEVENT_FLAGS manually.])
-      else
-        AX_LIB_EVENT([2.0])
-        if test "$success" = "yes"; then
-          DMD_LIBEVENT_FLAGS=$(echo "$LIBEVENT_LDFLAGS $LIBEVENT_LIBS" | \
-            sed -e 's/^ *//g;s/ *$//g;s/^\(.\)/-L\1/g;s/  */ -L/g')
-          with_d_event_tests="yes"
-        else
-          AC_MSG_WARN([D libevent interface present, but libevent library not found.])
-        fi
-      fi
     else
-      with_d_event_tests="yes"
+      AX_LIB_EVENT([2.0])
+      if test "$success" = "yes"; then
+        DMD_LIBEVENT_FLAGS=($DMD_EXTRA_FLAGS
+          $(echo "$LIBEVENT_LDFLAGS $LIBEVENT_LIBS" |
+          sed -e 's/^ *//g;s/ *$//g;s/^\(.\)/-L\1/g;s/  */ -L/g'))
+        DMD_LIBEVENT_FLAGS="${DMD_LIBEVENT_FLAGS[[@]]}"
+        with_d_event_tests="yes"
+      else
+        AC_MSG_WARN([D libevent interface present, but libevent library not found.])
+      fi
     fi
+  else
+    with_d_event_tests="yes"
   fi
 
   AX_CHECK_D_MODULE(deimos.openssl.ssl)
