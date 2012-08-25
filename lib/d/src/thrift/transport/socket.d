@@ -438,7 +438,7 @@ protected:
         socket_.setOption(SocketOptionLevel.SOCKET, type, value);
       } catch (SocketOSException e) {
         throw new TTransportException(
-          "Could not set send timeout: " ~ socketErrnoString(e.errorCode),
+          "Could not set timeout.",
           TTransportException.Type.UNKNOWN,
           __FILE__,
           __LINE__,

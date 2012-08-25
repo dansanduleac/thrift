@@ -44,8 +44,8 @@ version (Win32) {
   enum WSAENOTCONN = 10057;
   enum WSAETIMEDOUT = 10060;
 } else {
-  import core.stdc.errno : errnoProperty = errno, EAGAIN, ECONNRESET,
-    EINPROGRESS, EINTR, ENOTCONN, EPIPE;
+  import core.stdc.errno : errno, EAGAIN, ECONNRESET, EINPROGRESS, EINTR,
+    ENOTCONN, EPIPE;
   import core.stdc.string : strerror;
 }
 
@@ -71,7 +71,7 @@ version (Win32) {
     return (errno == WSAECONNRESET || errno == WSAENOTCONN);
   }
 } else {
-  auto getSocketErrno = (() { return errnoProperty; });
+  alias errno getSocketErrno;
   enum CONNECT_INPROGRESS_ERRNO = EINPROGRESS;
   enum INTERRUPTED_ERRNO = EINTR;
   enum WOULD_BLOCK_ERRNO = EAGAIN;
